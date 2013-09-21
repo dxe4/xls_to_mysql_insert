@@ -93,7 +93,7 @@ class Table:
         self.cols = cols
         self.rows = rows
         self.max_dict = {}
-        self.extra_column_spaces = ""
+        self.extra_column_spaces = "  "
 
     def add_row(self, row):
         self.rows.append(["NULL" if not i else i for i in row])
@@ -112,7 +112,7 @@ class Table:
 
 
     def row_to_str(self,row):
-        ret_str = "".join(["'"+str(k) + "'" + "".join(self.max_dict[i]*[" "]) +"," for i,k in enumerate(row)])[:-1]
+        ret_str = "".join(["'"+str(k) + "'" + "".join((self.max_dict[i]-len(k))*[" "]) +"," for i,k in enumerate(row)])[:-1]
         return "\n(%s)\n" % ret_str
 
 
@@ -122,7 +122,9 @@ class Table:
         columns = self.row_to_str(self.cols)
         values= "\nVALUES\n"
         rows = "".join([self.row_to_str(row) for row in self.rows])
+        print(insert)
         print(columns)
+        print(values)
         print(rows)
         self.max_size_for_cols()
 
