@@ -22,11 +22,8 @@ class SheetReader(object):
         self.current_table_name = None
         self.current_table = None
         self.tables = []
-        self.rows = []
-        self.cols = []
         self.process_sheet(sheet)
         self.add_table()
-        print(self.schema, "  ", self.current_table_name)
 
     def changes_state(f):
         def wrapper(*args):
@@ -36,25 +33,38 @@ class SheetReader(object):
         return wrapper
 
     def process_sheet(self, sheet:Sheet):
-        print(" rows ", sheet.nrows, " cols ", sheet.ncols)
         for row_index in range(sheet.nrows):
             self.process(row_index, sheet)
 
     def process(self, row_index, sheet:Sheet):
-        print(self.state)
         callback = self.state_callbacks[self.state]
         callback(row_index, sheet)
 
     def state_process(self):
         self.state = self.state_changes[self.state]
 
+    def fix_floats(self,values):
+        return [self.fix_float(value) for value in values]
+
+    def fix_float(self,value):
+        if isinstance(value,str):
+            return value
+        elif isinstance(value,float):
+            str_value = str(value)
+            if str_value.endswith(".0"):
+                return str(int(value))
+            else:
+                return str_value
+
+
     def process_row(self,row_index:int, sheet:Sheet):
         values = sheet.row_values(row_index)
+        values = self.fix_floats(values)
         if values == ['']*len(values):
             self.add_table()
             self.state_process()
         else:
-            self.current_table.rows.append(values)
+            self.current_table.add_row(values)
 
     @changes_state
     def process_schema(self, row_index:int, sheet:Sheet):
@@ -64,15 +74,11 @@ class SheetReader(object):
     def process_table(self, row_index:int, sheet:Sheet):
         self.current_table_name = sheet.cell(row_index,0).value
         self.current_table = Table(self.schema,self.current_table_name,[],[])
-        self.clear_state()
 
     @changes_state
     def process_cols(self, row_index:int, sheet:Sheet):
         self.current_table.cols = sheet.row_values(row_index)
 
-    def clear_state(self):
-        self.cols = []
-        self.rows = []
 
     def add_table(self):
         if self.current_table:
@@ -87,11 +93,29 @@ class Table:
         self.cols = cols
         self.rows = rows
 
+    def add_row(self, row):
+        self.rows.append(["NULL" if not i else i for i in row])
+
+    def max_size_for_cols(self):
+        #black magic :(
+        values_by_col = [(col_index,row[col_index]) for row in self.rows for col_index in range(0,len(self.cols))]
+        for col_index in range(0,len(self.cols)):
+            filtered = list(filter(lambda arg: arg[0]==col_index,values_by_col))
+            max_tuple = max(filtered,key=lambda l:len(l[1]))
+            print(max_tuple)
+        pass
+
     def __str__(self):
+        insert = "INSERT INTO `%s`.`%s`" % (self.schema,self.table)
+        columns = "\n()\n"
+        values= "\nVALUES\n"
+
+        self.max_size_for_cols()
+
         return "%s %s %s %s" % (self.schema,self.table,self.cols,self.rows)
 
     def __repr__(self):
-        return self.__str__()
+        return "%s %s %s %s" % (self.schema,self.table,self.cols,self.rows)
 
 if __name__ == "__main__":
     book = open_workbook('foo.xls')
@@ -101,3 +125,5 @@ if __name__ == "__main__":
     print(len(processed_sheets))
     for s in processed_sheets:
         print(str(s.tables))
+        for t in s.tables:
+            print(str(t))
