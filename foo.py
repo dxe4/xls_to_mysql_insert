@@ -92,24 +92,38 @@ class Table:
         self.table = table
         self.cols = cols
         self.rows = rows
+        self.max_dict = {}
+        self.extra_column_spaces = ""
 
     def add_row(self, row):
         self.rows.append(["NULL" if not i else i for i in row])
 
     def max_size_for_cols(self):
-        #black magic :(
-        values_by_col = [(col_index,row[col_index]) for row in self.rows for col_index in range(0,len(self.cols))]
+        #black magic :*(
+        values_by_col = [
+            (col_index,row[col_index])
+            for row in self.rows + [self.cols]
+            for col_index in range(0,len(self.cols))
+        ]
         for col_index in range(0,len(self.cols)):
-            filtered = list(filter(lambda arg: arg[0]==col_index,values_by_col))
-            max_tuple = max(filtered,key=lambda l:len(l[1]))
-            print(max_tuple)
-        pass
+            filtered_by_col = filter(lambda arg: arg[0]==col_index,values_by_col)
+            max_tuple = max(filtered_by_col,key=lambda l:len(l[1]))
+            self.max_dict[max_tuple[0]] = len(max_tuple[1] + self.extra_column_spaces)
+
+
+    def row_to_str(self,row):
+        ret_str = "".join(["'"+str(k) + "'" + "".join(self.max_dict[i]*[" "]) +"," for i,k in enumerate(row)])[:-1]
+        return "\n(%s)\n" % ret_str
+
 
     def __str__(self):
+        self.max_size_for_cols()
         insert = "INSERT INTO `%s`.`%s`" % (self.schema,self.table)
-        columns = "\n()\n"
+        columns = self.row_to_str(self.cols)
         values= "\nVALUES\n"
-
+        rows = "".join([self.row_to_str(row) for row in self.rows])
+        print(columns)
+        print(rows)
         self.max_size_for_cols()
 
         return "%s %s %s %s" % (self.schema,self.table,self.cols,self.rows)
