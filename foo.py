@@ -16,13 +16,17 @@ class SheetReader(object):
         self.state_callbacks = {
             "schema": self.process_schema,
             "table": self.process_table,
-            "rows": self.process_rows,
+            "rows": self.process_row,
             "cols": self.process_cols
         }
+        self.current_table_name = None
         self.current_table = None
         self.tables = []
+        self.rows = []
+        self.cols = []
         self.process_sheet(sheet)
-        print(self.schema, "  ", self.table)
+        self.add_table()
+        print(self.schema, "  ", self.current_table_name)
 
     def changes_state(f):
         def wrapper(*args):
@@ -34,9 +38,9 @@ class SheetReader(object):
     def process_sheet(self, sheet:Sheet):
         print(" rows ", sheet.nrows, " cols ", sheet.ncols)
         for row_index in range(sheet.nrows):
-            self.process_row(row_index, sheet)
+            self.process(row_index, sheet)
 
-    def process_row(self, row_index, sheet:Sheet):
+    def process(self, row_index, sheet:Sheet):
         print(self.state)
         callback = self.state_callbacks[self.state]
         callback(row_index, sheet)
@@ -44,10 +48,13 @@ class SheetReader(object):
     def state_process(self):
         self.state = self.state_changes[self.state]
 
-    def process_rows(self,row_index:int, sheet:Sheet):
+    def process_row(self,row_index:int, sheet:Sheet):
         values = sheet.row_values(row_index)
         if values == ['']*len(values):
+            self.add_table()
             self.state_process()
+        else:
+            self.current_table.rows.append(values)
 
     @changes_state
     def process_schema(self, row_index:int, sheet:Sheet):
@@ -55,16 +62,36 @@ class SheetReader(object):
 
     @changes_state
     def process_table(self, row_index:int, sheet:Sheet):
-        self.table = sheet.cell(row_index,0).value
+        self.current_table = Table(self.schema,self.current_table_name,[],[])
+        self.current_table_name = sheet.cell(row_index,0).value
+        self.clear_state()
 
     @changes_state
     def process_cols(self, row_index:int, sheet:Sheet):
-        pass
+        self.current_table.cols = sheet.row_values(row_index)
+
+    def clear_state(self):
+        self.cols = []
+        self.rows = []
+
+    def add_table(self):
+        if self.current_table:
+            self.tables.append(self.current_table)
+            self.current_table = None
 
 
 class Table:
-    pass
+    def __init__(self,schema:str,table:str,cols:list,rows:list):
+        self.schema = schema
+        self.table = table
+        self.cols = cols
+        self.rows = rows
 
+    def __str__(self):
+        return "%s %s %s %s" % (self.schema,self.table,self.cols,self.rows)
+
+    def __repr__(self):
+        return self.__str__()
 
 if __name__ == "__main__":
     book = open_workbook('foo.xls')
@@ -72,3 +99,5 @@ if __name__ == "__main__":
     for sheet in book.sheets():
         processed_sheets.append(SheetReader(sheet))
     print(len(processed_sheets))
+    for s in processed_sheets:
+        print(str(s.tables))
