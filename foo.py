@@ -62,8 +62,8 @@ class SheetReader(object):
 
     @changes_state
     def process_table(self, row_index:int, sheet:Sheet):
-        self.current_table = Table(self.schema,self.current_table_name,[],[])
         self.current_table_name = sheet.cell(row_index,0).value
+        self.current_table = Table(self.schema,self.current_table_name,[],[])
         self.clear_state()
 
     @changes_state
