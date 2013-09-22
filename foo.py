@@ -115,13 +115,20 @@ class Table:
 
     def row_to_str(self, row):
         #black magic :*(
+
+        def add_quotes(string:str):
+            if string.endswith(")"):
+                return string
+            return "'" + string + "'"
         ret_str = "".join(
-            ["'" + str(k) + "'" +
+            [add_quotes(str(k)) +
              "".join(
                  (self.max_dict[i] - len(k)) * [" "]
              ) + "," for i, k in enumerate(row)
             ]
         )[:-1]
+
+
         return "(%s)\n" % ret_str
 
 
