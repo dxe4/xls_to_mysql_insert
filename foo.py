@@ -118,7 +118,7 @@ class Table:
 
         def add_quotes(string:str):
             if string.endswith(")"):
-                return string
+                return string + "  "
             return "'" + string + "'"
         ret_str = "".join(
             [add_quotes(str(k)) +
@@ -138,13 +138,9 @@ class Table:
         columns = "\n" + self.row_to_str(self.cols)
         values = "VALUES"
         rows = "\n" + "".join([self.row_to_str(row) for row in self.rows])
-        print(insert, end="")
-        print(columns, end="")
-        print(values, end="")
-        print(rows, end="")
         self.max_size_for_cols()
 
-        return "%s %s %s %s" % (self.schema, self.table, self.cols, self.rows)
+        return "".join([insert, columns, values, rows,";"])
 
     def __repr__(self):
         return "%s %s %s %s" % (self.schema, self.table, self.cols, self.rows)
@@ -155,8 +151,10 @@ if __name__ == "__main__":
     processed_sheets = []
     for sheet in book.sheets():
         processed_sheets.append(SheetReader(sheet))
-    print(len(processed_sheets))
-    for s in processed_sheets:
-        print(str(s.tables))
-        for t in s.tables:
-            print(str(t))
+
+    for sheet in processed_sheets:
+
+        for table in sheet.tables:
+            out_file = open("".join([table.schema,"-",table.table,".sql"]), "wt")
+            out_file.write(str(table))
+            out_file.close()
