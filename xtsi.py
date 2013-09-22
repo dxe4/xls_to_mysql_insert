@@ -1,7 +1,7 @@
 __author__ = 'foobar'
 from xlrd import open_workbook
 from xlrd.sheet import Sheet
-
+import sys
 
 class SheetReader(object):
     state_changes = {
@@ -147,7 +147,11 @@ class Table:
 
 
 if __name__ == "__main__":
-    book = open_workbook('foo.xls')
+    if len(sys.argv) < 2:
+        print("No file name given")
+        sys.exit()
+    print(sys.argv[1])
+    book = open_workbook(sys.argv[1])
     processed_sheets = []
     for sheet in book.sheets():
         processed_sheets.append(SheetReader(sheet))
