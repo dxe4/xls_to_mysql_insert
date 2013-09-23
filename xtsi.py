@@ -3,6 +3,7 @@ from xlrd import open_workbook
 from xlrd.sheet import Sheet
 import sys
 
+
 class SheetReader(object):
     state_changes = {
         "schema": "table",
@@ -120,6 +121,7 @@ class Table:
             if string.endswith(")"):
                 return string + "  "
             return "'" + string + "'"
+
         ret_str = "".join(
             [add_quotes(str(k)) +
              "".join(
@@ -127,7 +129,6 @@ class Table:
              ) + "," for i, k in enumerate(row)
             ]
         )[:-1]
-
 
         return "(%s)\n" % ret_str
 
@@ -140,7 +141,7 @@ class Table:
         rows = "\n" + "".join([self.row_to_str(row) for row in self.rows])
         self.max_size_for_cols()
 
-        return "".join([insert, columns, values, rows,";"])
+        return "".join([insert, columns, values, rows, ";"])
 
     def __repr__(self):
         return "%s %s %s %s" % (self.schema, self.table, self.cols, self.rows)
@@ -159,6 +160,6 @@ if __name__ == "__main__":
     for sheet in processed_sheets:
 
         for table in sheet.tables:
-            out_file = open("".join([table.schema,"-",table.table,".sql"]), "wt")
+            out_file = open("".join([table.schema, "-", table.table, ".sql"]), "wt")
             out_file.write(str(table))
             out_file.close()
