@@ -1,7 +1,7 @@
 xls_to_mysql_insert
 ===================
 
-Create sql insert files from excel
+    Create sql insert files from excel files
 
 #Example:
 
