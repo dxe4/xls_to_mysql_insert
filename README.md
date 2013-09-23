@@ -3,12 +3,12 @@ xls_to_mysql_insert
 
     Create sql insert files from excel files
 
-#Example:
+#Examples:
 
-Input:
+Input Flat Mode:
 ---
 ![alt text](https://raw.github.com/papaloizouc/xls_to_mysql_insert/master/xls_file_.png "Input")
-Output:
+Output Flat Mode:
 ---
 
     the_schema-the_table.sql:
@@ -33,6 +33,13 @@ Output:
     (NULL   ,NULL     ,curdate()   )
     ;
 ```
+
+---
+Input Sheet Mode:
+---
+
+Output Sheet Mode:
+---
 
 #Run:
     script: ./run.sh example.xls

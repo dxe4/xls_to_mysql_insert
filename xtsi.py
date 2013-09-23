@@ -13,7 +13,7 @@ class SheetReader(object):
     }
 
     def __init__(self, sheet:Sheet,mode:str):
-        self.state =  "schema"  if mode == "f" else "cols"
+        self.state =  "schema" if mode == "f" else "cols"
         self.name = sheet.name
         self.state_callbacks = {
             "schema": self.process_schema,
@@ -137,8 +137,6 @@ class Table:
         )[:-1]
 
         return "(%s)\n" % ret_str
-
-
 
     def __str__(self):
         self.max_size_for_cols()
