@@ -10,7 +10,7 @@ Input:
 ![alt text](https://raw.github.com/papaloizouc/xls_to_mysql_insert/master/xls_file_.png "Input")
 Output:
 ---
-the_schema-the_table.sql:
+    the_schema-the_table.sql:
 
 ```mysql
     INSERT INTO `the_schema`.`the_table`
@@ -21,7 +21,7 @@ the_schema-the_table.sql:
 ```
 
 
-the_schema-Table_2.sql:
+    the_schema-Table_2.sql:
 ```mysql
     INSERT INTO `the_schema`.`Table_2`
     ('col1' ,'col2'   ,'col3'      )
