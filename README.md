@@ -8,8 +8,8 @@ Create sql insert files from excel
 Input:
 ---
 ![alt text](https://raw.github.com/papaloizouc/xls_to_mysql_insert/master/xls_file_.png "Input")
-___
 Output:
+---
 the_schema-the_table.sql:
 
 ```mysql
