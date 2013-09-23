@@ -12,8 +12,8 @@ class SheetReader(object):
         "rows": "table"
     }
 
-    def __init__(self, sheet:Sheet):
-        self.state = "schema"
+    def __init__(self, sheet:Sheet,mode:str):
+        self.state =  "schema"  if mode == "f" else "cols"
         self.name = sheet.name
         self.state_callbacks = {
             "schema": self.process_schema,
@@ -21,8 +21,15 @@ class SheetReader(object):
             "rows": self.process_row,
             "cols": self.process_cols
         }
-        self.current_table_name = None
-        self.current_table = None
+        if self.state == "cols":
+            name_split = self.name.split(".")
+            self.current_table_name = name_split[-1]
+            if len(name_split) == 2:
+                self.schema = name_split[-2]
+                self.current_table = Table(self.schema, self.current_table_name, [], [])
+        else:
+            self.current_table_name = None
+            self.current_table = None
         self.tables = []
         self.process_sheet(sheet)
         self.add_table()
@@ -116,7 +123,6 @@ class Table:
 
     def row_to_str(self, row):
         #black magic :*(
-
         def add_backtick(string:str):
             if string.endswith(")") or string == "NULL":
                 return string + "  "
@@ -131,6 +137,7 @@ class Table:
         )[:-1]
 
         return "(%s)\n" % ret_str
+
 
 
     def __str__(self):
@@ -151,11 +158,15 @@ if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("No file name given")
         sys.exit()
-    print(sys.argv[1])
+
+    mode =None
+    if len(sys.argv) > 2:
+        mode = sys.argv[2]
+
     book = open_workbook(sys.argv[1])
     processed_sheets = []
     for sheet in book.sheets():
-        processed_sheets.append(SheetReader(sheet))
+        processed_sheets.append(SheetReader(sheet,mode))
 
     for sheet in processed_sheets:
 
