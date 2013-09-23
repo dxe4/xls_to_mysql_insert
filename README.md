@@ -35,8 +35,8 @@ Output:
 ```
 
 #Run:
-script: ./run.sh example.py
-manually: xtsi_venv/bin/python xtsi.py example.xls
+    script: ./run.sh example.py
+    manually: xtsi_venv/bin/python xtsi.py example.xls
 
-Note i don't have windows, if someone can help to make a .bat file it would be nice.
-Also i didn't test if it works on windows
+    Note i don't have windows, if someone can help to make a .bat file it would be nice.
+    Also i didn't test if it works on windows
