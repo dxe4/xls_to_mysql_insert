@@ -12,7 +12,6 @@ Output:
 ---
 
     the_schema-the_table.sql:
-
 ```mysql
     INSERT INTO `the_schema`.`the_table`
     ('col100000' ,'col2'  ,'col3'  )
@@ -23,7 +22,6 @@ Output:
 
 
     the_schema-Table_2.sql:
-
 ```mysql
     INSERT INTO `the_schema`.`Table_2`
     ('col1' ,'col2'   ,'col3'      )
