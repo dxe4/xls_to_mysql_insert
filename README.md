@@ -7,8 +7,10 @@ xls_to_mysql_insert
 
 Run flat mode:
 ---
-windows: flat_mode.bat doc\example_flat.xls
-linux: ./flat_mode.sh doc/example_flat.xls
+
+    windows: flat_mode.bat doc\example_flat.xls
+
+    linux: ./flat_mode.sh doc/example_flat.xls
 
 
 Input Flat Mode:
@@ -41,8 +43,10 @@ Output Flat Mode:
 ```
 Run sheet mode:
 ---
-windows: sheet_mode.bat doc\example_sheet.xls
-linux: ./sheet_mode.sh doc/example_sheet.xls
+
+    windows: sheet_mode.bat doc\example_sheet.xls
+
+    linux: ./sheet_mode.sh doc/example_sheet.xls
 
 
 Input Sheet Mode:
