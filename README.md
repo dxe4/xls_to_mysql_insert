@@ -7,7 +7,7 @@ xls_to_mysql_insert
 
 Input Flat Mode:
 ---
-![alt text](https://raw.github.com/papaloizouc/xls_to_mysql_insert/master/xls_file_.png "Input")
+![alt text](https://raw.github.com/papaloizouc/xls_to_mysql_insert/master/doc/xls_file_.png "Input")
 Output Flat Mode:
 ---
 
@@ -37,7 +37,7 @@ Output Flat Mode:
 ---
 Input Sheet Mode:
 ---
-![alt text](https://raw.github.com/papaloizouc/xls_to_mysql_insert/master/xls_file_sheets.png "Input")
+![alt text](https://raw.github.com/papaloizouc/xls_to_mysql_insert/master/doc/xls_file_sheets.png "Input")
 
 
 Output Sheet Mode:
