@@ -37,10 +37,24 @@ Output Flat Mode:
 ---
 Input Sheet Mode:
 ---
+![alt text](https://raw.github.com/papaloizouc/xls_to_mysql_insert/master/xls_file_sheets.png "Input")
+
 
 Output Sheet Mode:
 ---
 
+    sheet_schema-table_name.sql:
+```mysql
+    INSERT INTO `sheet_schema`.`table_name`
+    (`col1` ,`col2`                          ,`col3`  ,`col000000000000000000000` )
+    VALUES
+    (`1`    ,`a`                             ,NULL    ,NULL                       )
+    (`2`    ,`b`                             ,`33.33` ,`99.99`                    )
+    (`3`    ,`very big row must be allgined` ,NULL    ,`5f34`                     )
+    (`4`    ,`d`                             ,`321`   ,`5fe`                      )
+    (`5`    ,NULL                            ,NULL    ,NULL                       )
+    ;
+```
 #Run:
     script: ./run.sh example.xls
     manually: xtsi_venv/bin/python xtsi.py example.xls
