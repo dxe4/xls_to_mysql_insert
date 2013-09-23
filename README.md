@@ -69,9 +69,3 @@ Output Sheet Mode:
     (`5`    ,NULL                            ,NULL    ,NULL                       )
     ;
 ```
-#Run:
-    script: ./run.sh example.xls
-    manually: xtsi_venv/bin/python xtsi.py example.xls
-
-    Note i don't have windows, if someone can help to make a .bat file it would be nice.
-    Also i didn't test if it works on windows
