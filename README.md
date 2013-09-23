@@ -13,7 +13,7 @@ Output:
 
     the_schema-the_table.sql:
 ```mysql
-    INSERT INTO `the_schema`.`the_table`
+INSERT INTO `the_schema`.`the_table`
     ('col100000' ,'col2'  ,'col3'  )
     VALUES
     ('val13'     ,'val24' ,'val35' )
@@ -26,11 +26,11 @@ Output:
     INSERT INTO `the_schema`.`Table_2`
     ('col1' ,'col2'   ,'col3'      )
     VALUES
-    ('901'  ,'NULL'   ,'3'         )
-    ('3213' ,'54'     ,'NULL'      )
-    ('NULL' ,'765765' ,'NULL'      )
-    ('NULL' ,'55.55'  ,'90909090'  )
-    ('NULL' ,'NULL'   ,curdate()   )
+    ('901'  ,NULL     ,'3'         )
+    ('3213' ,'54'     ,NULL        )
+    (NULL   ,'765765' ,NULL        )
+    (NULL   ,'55.55'  ,'90909090'  )
+    (NULL   ,NULL     ,curdate()   )
     ;
 ```
 

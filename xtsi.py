@@ -118,7 +118,7 @@ class Table:
         #black magic :*(
 
         def add_quotes(string:str):
-            if string.endswith(")"):
+            if string.endswith(")") or string == "NULL":
                 return string + "  "
             return "'" + string + "'"
 
