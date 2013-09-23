@@ -163,3 +163,4 @@ if __name__ == "__main__":
             out_file = open("".join([table.schema, "-", table.table, ".sql"]), "wt")
             out_file.write(str(table))
             out_file.close()
+            print("created: " + "".join([table.schema, "-", table.table, ".sql"]))
