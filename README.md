@@ -5,6 +5,11 @@ xls_to_mysql_insert
 
 #Examples:
 
+Run flat mode:
+---
+windows: flat_mode.bat doc\example_flat.xls
+linux: ./flat_mode.sh doc/example_flat.xls
+---
 Input Flat Mode:
 ---
 ![alt text](https://raw.github.com/papaloizouc/xls_to_mysql_insert/master/doc/xls_file_.png "Input")
@@ -33,7 +38,11 @@ Output Flat Mode:
     (NULL   ,NULL     ,curdate()   )
     ;
 ```
-
+Run sheet mode:
+---
+windows: sheet_mode.bat doc\example_sheet.xls
+linux: ./sheet_mode.sh doc/example_sheet.xls
+---
 ---
 Input Sheet Mode:
 ---
