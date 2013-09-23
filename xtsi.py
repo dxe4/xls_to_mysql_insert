@@ -117,13 +117,13 @@ class Table:
     def row_to_str(self, row):
         #black magic :*(
 
-        def add_quotes(string:str):
+        def add_backtick(string:str):
             if string.endswith(")") or string == "NULL":
                 return string + "  "
-            return "'" + string + "'"
+            return "`" + string + "`"
 
         ret_str = "".join(
-            [add_quotes(str(k)) +
+            [add_backtick(str(k)) +
              "".join(
                  (self.max_dict[i] - len(k)) * [" "]
              ) + "," for i, k in enumerate(row)
