@@ -1,1 +1,1 @@
-python.exe xtsi.py %1 f
+python xtsi.py %1 f
