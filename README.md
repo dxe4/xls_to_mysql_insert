@@ -4,7 +4,6 @@ xls_to_mysql_insert
     Create sql insert files from excel files
     git clone https://github.com/papaloizouc/xls_to_mysql_insert.git
 
-Note: tested only on linux at the moment.
 Note: I am currently working on it but at the moment for windows you have to install python3 and xlrd and add it in the path. i should be able to fix it today.
 
 #Examples:
