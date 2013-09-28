@@ -1,1 +1,1 @@
-xtsi_venv_win\Scripts\python.exe xtsi.py %1
+python.exe xtsi.py %1
