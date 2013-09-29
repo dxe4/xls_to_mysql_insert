@@ -172,6 +172,6 @@ if __name__ == "__main__":
     for sheet in processed_sheets:
         for table in sheet.tables:
             #out_file = open("".join([table.schema, "-", table.table, ".sql"]), "wt")
-            out_file.write(str(table))
+            out_file.write(str(table)+"\n\n")
     out_file.close()
     print("created " + file_to_write)
