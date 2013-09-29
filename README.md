@@ -4,19 +4,20 @@ xls_to_mysql_insert
     Create sql insert files from excel files
     git clone https://github.com/papaloizouc/xls_to_mysql_insert.git
 
-Tested on windows xp 32bit and arch linux. You only have to install python3.3.
+    Tested on windows xp 32bit and arch linux.
+    You only have to install python3.3.
 
 If for some reason the sh/bat file won't work you here's the instructions to get the libraries you need:
 
-
-#Windows
+    Windows (optional)
 
     download python3.3
     download http://python-distribute.org/distribute_setup.py
     run python distribute_setup.py (on windows you may have to add to path C:\Python33)
     run C:\Python33\Scripts\easy_install xlrd
 
-#Linux
+    Linux (optional)
+
     download python3.3
     wget http://python-distribute.org/distribute_setup.py
     python3.3 distribute_setup.py
