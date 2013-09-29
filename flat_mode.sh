@@ -1,1 +1,1 @@
-xtsi_venv_linux/bin/python xtsi.py $1 f
+dist/linux/xtsi $1 f
