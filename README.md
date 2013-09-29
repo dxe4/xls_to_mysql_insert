@@ -4,7 +4,23 @@ xls_to_mysql_insert
     Create sql insert files from excel files
     git clone https://github.com/papaloizouc/xls_to_mysql_insert.git
 
-Note: I am currently working on it but at the moment for windows you have to install python3 and xlrd and add it in the path. i should be able to fix it today.
+Tested on windows xp 32bit and arch linux. You only have to install python3.3.
+
+If for some reason the sh/bat file won't work you here's the instructions to get the libraries you need:
+
+
+#Windows
+
+    download python3.3
+    download http://python-distribute.org/distribute_setup.py
+    run python distribute_setup.py (on windows you may have to add to path C:\Python33)
+    run C:\Python33\Scripts\easy_install xlrd
+
+#Linux
+    download python3.3
+    wget http://python-distribute.org/distribute_setup.py
+    python3.3 distribute_setup.py
+    easy_install-3.3 xlrd
 
 #Examples:
 
@@ -15,6 +31,8 @@ Run flat mode:
 
     linux: ./flat_mode.sh doc/example_flat.xls
 
+    manualy: python xtsi.py doc/example_flat.xls f
+
 
 Input Flat Mode:
 ---
@@ -22,7 +40,7 @@ Input Flat Mode:
 Output Flat Mode:
 ---
 
-    the_schema-the_table.sql:
+    example_flat.sql:
 ```mysql
     INSERT INTO `the_schema`.`the_table`
     (`col100000` ,`col2`  ,`col3`  )
@@ -32,7 +50,6 @@ Output Flat Mode:
 ```
 
 
-    the_schema-Table_2.sql:
 ```mysql
     INSERT INTO `the_schema`.`Table_2`
     (`col1` ,`col2`   ,`col3`      )
@@ -51,6 +68,8 @@ Run sheet mode:
 
     linux: ./sheet_mode.sh doc/example_sheet.xls
 
+    manualy: python xtsi.py doc/example_sheet.xls
+
 
 Input Sheet Mode:
 ---
@@ -60,7 +79,7 @@ Input Sheet Mode:
 Output Sheet Mode:
 ---
 
-    sheet_schema-table_name.sql:
+    example_sheet.sql:
 ```mysql
     INSERT INTO `sheet_schema`.`table_name`
     (`col1` ,`col2`                          ,`col3`  ,`col000000000000000000000` )
