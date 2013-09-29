@@ -1,7 +1,7 @@
 __author__ = 'foobar'
 from xlrd import open_workbook
 from xlrd.sheet import Sheet
-import sys
+import sys,os
 
 
 class SheetReader(object):
@@ -162,14 +162,16 @@ if __name__ == "__main__":
         mode = sys.argv[2]
 
     book = open_workbook(sys.argv[1])
+
+    file_to_write = os.path.basename(sys.argv[1]).split(".")[0]+".sql"
     processed_sheets = []
     for sheet in book.sheets():
         processed_sheets.append(SheetReader(sheet,mode))
 
+    out_file = open(file_to_write,"wt")
     for sheet in processed_sheets:
-
         for table in sheet.tables:
-            out_file = open("".join([table.schema, "-", table.table, ".sql"]), "wt")
+            #out_file = open("".join([table.schema, "-", table.table, ".sql"]), "wt")
             out_file.write(str(table))
-            out_file.close()
-            print("created: " + "".join([table.schema, "-", table.table, ".sql"]))
+    out_file.close()
+    print("created " + file_to_write)
