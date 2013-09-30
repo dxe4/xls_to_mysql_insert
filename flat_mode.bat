@@ -1,1 +1,1 @@
-python xtsi.py %1 f
+dist\win32-3.3\xtsi %1 f
